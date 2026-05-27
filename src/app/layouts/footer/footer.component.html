@@ -1,0 +1,29 @@
+<footer class="site-footer">
+  <div class="footer-inner">
+    <section>
+      <h2>{{ church.name }}</h2>
+      <p>{{ church.mission }}</p>
+      <p>{{ church.address }}</p>
+      <p>{{ church.phone }}</p>
+    </section>
+
+    <section>
+      <h2>Service Times</h2>
+      <p *ngFor="let service of church.serviceTimes">
+        {{ service.label }} {{ service.time }}
+      </p>
+    </section>
+
+    <section>
+      <h2>Connect</h2>
+      <a routerLink="/contact">Contact Us</a>
+      <a routerLink="/sermons">Sermons</a>
+      <a routerLink="/songbook">Songbook</a>
+      <a [href]="church.links.giving" target="_blank" rel="noreferrer">Give Online</a>
+    </section>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; {{ currentYear }} {{ church.name }}. All rights reserved.</p>
+  </div>
+</footer>

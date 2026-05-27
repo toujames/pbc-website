@@ -1,0 +1,70 @@
+<section class="hero">
+  <div class="hero-inner">
+    <img class="hero-logo" src="/pbc-logo.png" [alt]="church.name + ' logo'">
+    <p class="eyebrow">Welcome</p>
+    <h1>{{ church.name }}</h1>
+    <p>
+      {{ church.mission }}
+    </p>
+    <div class="hero-actions">
+      <a class="button-link" routerLink="/about">Plan a Visit</a>
+      <a class="button-link secondary" routerLink="/songbook">Open Songbook</a>
+      <a class="button-link secondary" [href]="church.links.giving" target="_blank" rel="noreferrer">Give Online</a>
+    </div>
+  </div>
+</section>
+
+<section class="page-section latest-video">
+  <div class="section-inner video-grid">
+    <div>
+      <p class="eyebrow">Latest Video</p>
+      <h2>Watch the latest from {{ church.shortName }}</h2>
+      <p>
+        The homepage is set up to show the newest public upload from the PBC Tulsa YouTube channel.
+      </p>
+      <a class="button-link" [href]="church.links.youtube" target="_blank" rel="noreferrer">Open YouTube Channel</a>
+    </div>
+
+    <div class="video-frame">
+      <iframe
+        title="Latest PBC Tulsa YouTube video"
+        [src]="latestVideoUrl"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+      ></iframe>
+    </div>
+  </div>
+</section>
+
+<section class="page-section">
+  <div class="section-inner feature-grid">
+    <article class="content-card">
+      <h2>Sunday Worship</h2>
+      <p>Sunday Bible Study at 10:00 AM and Worship Service at 11:00 AM in Tulsa.</p>
+    </article>
+    <article class="content-card">
+      <h2>Church Songbook</h2>
+      <p>Search the PBC songbook by title, type, author, and lyrics from Supabase.</p>
+    </article>
+    <article class="content-card">
+      <h2>2025-2027 Leadership</h2>
+      <p>View current church staff, departments, and rotating leadership terms.</p>
+    </article>
+  </div>
+</section>
+
+<section class="page-section visit-band">
+  <div class="section-inner visit-grid">
+    <div>
+      <p class="eyebrow">Visit</p>
+      <h2>{{ church.shortName }}</h2>
+      <p>{{ church.address }}</p>
+    </div>
+    <div class="service-list">
+      <p *ngFor="let service of church.serviceTimes">
+        <strong>{{ service.label }}</strong>
+        <span>{{ service.time }}</span>
+      </p>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,35 @@
+<section class="page-section songbook-page">
+  <div class="section-inner">
+    <p class="eyebrow">Church Songbook</p>
+    <h1 class="section-title">PBC Songbook</h1>
+    <p class="lead">Search by title, number, author, or song type. The current website lists 1,171 songs.</p>
+
+    <div class="songbook-summary">
+      <span>{{ currentType() }}</span>
+      <strong>{{ filteredSongs().length }} shown</strong>
+    </div>
+
+    <label class="search-field">
+      <span>Search songs</span>
+      <input
+        type="search"
+        [ngModel]="searchTerm()"
+        (ngModelChange)="updateSearchTerm($event)"
+        placeholder="Ka Hatna Pakai"
+      >
+    </label>
+
+    <p class="status" *ngIf="isLoading()">Loading songbook...</p>
+    <p class="status warning" *ngIf="errorMessage()">{{ errorMessage() }}</p>
+
+    <div class="song-list">
+      <a class="song-row" *ngFor="let song of filteredSongs()" [routerLink]="['/songbook', song.id]">
+        <span class="song-number">{{ song.number || '-' }}</span>
+        <span>
+          <strong>{{ song.title }}</strong>
+          <small>{{ song.author || 'Unknown author' }} <span *ngIf="song.category">- {{ song.category }}</span></small>
+        </span>
+      </a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,33 @@
+<header class="site-header">
+  <nav class="nav-shell" aria-label="Main navigation">
+    <a class="brand" routerLink="/" (click)="closeMenu()">
+      <img class="brand-logo" src="/pbc-logo.png" [alt]="church.name + ' logo'">
+      <span class="brand-text">{{ church.name }}</span>
+    </a>
+
+    <button
+      class="menu-toggle"
+      type="button"
+      [attr.aria-expanded]="menuOpen()"
+      aria-controls="primary-menu"
+      (click)="toggleMenu()"
+    >
+      Menu
+    </button>
+
+    <ul id="primary-menu" class="nav-links" [class.open]="menuOpen()">
+      <li *ngFor="let item of navItems">
+        <a
+          [routerLink]="item.path"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: item.path === '/' }"
+          (click)="closeMenu()"
+        >
+          {{ item.label }}
+        </a>
+      </li>
+    </ul>
+
+    <a class="give-link" [href]="church.links.giving" target="_blank" rel="noreferrer">Give</a>
+  </nav>
+</header>

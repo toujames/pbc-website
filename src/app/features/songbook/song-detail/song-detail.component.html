@@ -1,0 +1,27 @@
+<section class="page-section">
+  <article class="section-inner song-detail">
+    <a class="back-link" routerLink="/songbook">Back to Songbook</a>
+
+    <p class="eyebrow">Song Detail</p>
+    <h1 class="section-title">{{ song()?.title || 'Loading song...' }}</h1>
+
+    <p class="status warning" *ngIf="errorMessage()">{{ errorMessage() }}</p>
+
+    <dl *ngIf="song() as selectedSong" class="meta-list">
+      <div *ngIf="selectedSong.number">
+        <dt>Number</dt>
+        <dd>{{ selectedSong.number }}</dd>
+      </div>
+      <div *ngIf="selectedSong.author">
+        <dt>Author</dt>
+        <dd>{{ selectedSong.author }}</dd>
+      </div>
+      <div *ngIf="selectedSong.category">
+        <dt>Category</dt>
+        <dd>{{ selectedSong.category }}</dd>
+      </div>
+    </dl>
+
+    <pre *ngIf="song()?.lyrics" class="lyrics">{{ song()?.lyrics }}</pre>
+  </article>
+</section>

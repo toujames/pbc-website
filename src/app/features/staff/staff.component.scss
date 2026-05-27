@@ -1,0 +1,85 @@
+.staff-grid {
+  margin-top: 2rem;
+}
+
+.staff-card {
+  display: grid;
+  grid-template-columns: 4rem 1fr;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+.photo-placeholder {
+  display: grid;
+  width: 4rem;
+  height: 4rem;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--color-blue-900);
+  color: var(--color-white);
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+h2 {
+  margin: 0;
+  color: var(--color-blue-900);
+  font-family: var(--font-serif);
+}
+
+p {
+  margin: 0.25rem 0;
+}
+
+.role {
+  color: var(--color-red-700);
+  font-weight: 700;
+}
+
+.department {
+  color: var(--color-blue-900);
+}
+
+.term {
+  color: var(--color-muted);
+  font-weight: 700;
+}
+
+a {
+  overflow-wrap: anywhere;
+  color: var(--color-red-700);
+  font-weight: 700;
+}
+
+.rotation-panel {
+  margin-top: 2rem;
+  border-top: 3px solid var(--color-red-700);
+  padding: 1.5rem;
+  background: var(--color-surface);
+}
+
+.rotation-panel ul {
+  display: grid;
+  margin: 1rem 0 0;
+  padding: 0;
+  gap: 0.75rem;
+  list-style: none;
+}
+
+.rotation-panel li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+@media (max-width: 620px) {
+  .staff-card {
+    grid-template-columns: 1fr;
+  }
+
+  .rotation-panel li {
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+}

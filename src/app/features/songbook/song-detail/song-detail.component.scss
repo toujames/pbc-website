@@ -1,0 +1,51 @@
+.song-detail {
+  max-width: 820px;
+}
+
+.back-link {
+  display: inline-flex;
+  margin-bottom: 1.25rem;
+  color: var(--color-red-700);
+  font-weight: 700;
+}
+
+.warning {
+  color: var(--color-red-700);
+  font-weight: 700;
+}
+
+.meta-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  margin: 2rem 0;
+  gap: 0.75rem;
+}
+
+.meta-list div {
+  border: 1px solid var(--color-border);
+  border-radius: 0.35rem;
+  padding: 0.9rem;
+}
+
+dt {
+  color: var(--color-muted);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+dd {
+  margin: 0.25rem 0 0;
+  color: var(--color-blue-900);
+  font-weight: 700;
+}
+
+.lyrics {
+  overflow-x: auto;
+  border-left: 4px solid var(--color-blue-700);
+  padding: 1rem;
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-family: var(--font-serif);
+  white-space: pre-wrap;
+}
