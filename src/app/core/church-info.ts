@@ -8,9 +8,8 @@ export const churchInfo = {
   vision:
     'Peniel Baptist Church aims to build up a strong missional church for evangelism works to accomplish the Great Commission of Jesus Christ.',
   serviceTimes: [
-    { label: 'Sunday Bible Study', time: '10:00 AM' },
     { label: 'Sunday Worship Service', time: '11:00 AM' },
-    { label: 'Wednesday Night Prayer', time: '6:00 PM' }
+    { label: 'Wednesday Bible Study', time: '6:30 PM' }
   ],
   photos: [
     {
