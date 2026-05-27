@@ -37,6 +37,9 @@ switch (command) {
   case 'update':
     await updateSong(args[0], args.slice(1).join(' '));
     break;
+  case 'format-lyrics':
+    await formatLyrics(args[0], args.includes('--write'));
+    break;
   default:
     printUsage();
     process.exit(command ? 1 : 0);
@@ -113,6 +116,110 @@ async function updateSong(id, jsonPatch) {
   console.log(JSON.stringify(data, null, 2));
 }
 
+async function formatLyrics(id, shouldWrite) {
+  if (!id) {
+    fail('Usage: npm run songs:admin -- format-lyrics <song-id> [--write]');
+  }
+
+  const { data, error } = await supabase
+    .from(table)
+    .select('id,title,lyrics_text')
+    .eq('id', id)
+    .single();
+
+  if (error) {
+    fail(formatSupabaseError(error));
+  }
+
+  const formatted = formatForProPresenter(data.lyrics_text || '');
+
+  if (!shouldWrite) {
+    console.log(`# ${data.title}`);
+    console.log('');
+    console.log(formatted);
+    console.log('');
+    console.log('Dry run only. Add --write to update lyrics_text in Supabase.');
+    return;
+  }
+
+  const { data: updated, error: updateError } = await supabase
+    .from(table)
+    .update({ lyrics_text: formatted })
+    .eq('id', id)
+    .select('id,title')
+    .single();
+
+  if (updateError) {
+    fail(formatSupabaseError(updateError));
+  }
+
+  console.log(`Updated lyrics_text for ${updated.title}`);
+}
+
+function formatForProPresenter(rawLyrics) {
+  const metadataPattern = /^(doh\s+is|key\s*:|bpm\s*:|ccli\s*:)/i;
+  const lines = rawLyrics
+    .replace(/\r\n?/g, '\n')
+    .split('\n')
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .filter((line) => !metadataPattern.test(line));
+
+  const sections = [];
+  let current = null;
+
+  for (const line of lines) {
+    const verseMatch = line.match(/^(\d+)[.)]\s*(.*)$/);
+
+    if (verseMatch) {
+      current = {
+        label: `Verse ${verseMatch[1]}`,
+        lines: []
+      };
+      sections.push(current);
+
+      if (verseMatch[2]) {
+        current.lines.push(verseMatch[2]);
+      }
+
+      continue;
+    }
+
+    if (!current) {
+      current = {
+        label: 'Verse 1',
+        lines: []
+      };
+      sections.push(current);
+    }
+
+    current.lines.push(line);
+  }
+
+  const normalizedSections = [];
+
+  for (const section of sections) {
+    if (section.lines.length <= 4) {
+      normalizedSections.push(section);
+      continue;
+    }
+
+    for (let index = 0; index < section.lines.length; index += 4) {
+      const chunk = section.lines.slice(index, index + 4);
+      const label = section.label === 'Verse 1' && index === 4 ? 'Chorus' : section.label;
+
+      normalizedSections.push({
+        label,
+        lines: chunk
+      });
+    }
+  }
+
+  return normalizedSections
+    .map((section) => [section.label, '', ...section.lines].join('\n'))
+    .join('\n\n');
+}
+
 function loadDotenv() {
   let contents = '';
 
@@ -151,6 +258,8 @@ Usage:
   npm run songs:admin -- sample 10
   npm run songs:admin -- set-published <song-id> true
   npm run songs:admin -- update <song-id> '{"title":"New Title"}'
+  npm run songs:admin -- format-lyrics <song-id>
+  npm run songs:admin -- format-lyrics <song-id> --write
 `);
 }
 
