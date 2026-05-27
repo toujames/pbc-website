@@ -12,6 +12,23 @@ export const churchInfo = {
     { label: 'Sunday Worship Service', time: '11:00 AM' },
     { label: 'Wednesday Night Prayer', time: '6:00 PM' }
   ],
+  photos: [
+    {
+      src: '/images/pbc-mission.jpg',
+      alt: 'Peniel Baptist Church congregation gathering',
+      title: 'Gathered in Worship'
+    },
+    {
+      src: '/images/pbc-bylaws.jpg',
+      alt: 'Peniel Baptist Church members inside the sanctuary',
+      title: 'Church Family'
+    },
+    {
+      src: '/images/pbc-vision.jpg',
+      alt: 'Peniel Baptist Church fellowship and worship moment',
+      title: 'Serving Together'
+    }
+  ],
   links: {
     giving: 'https://pbctulsa.churchcenter.com/giving',
     bulletin: 'https://pbctulsa.churchcenter.com/pages/bulletin',

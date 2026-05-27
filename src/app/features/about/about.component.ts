@@ -13,10 +13,12 @@ import { churchInfo } from '@core/church-info';
           <article>
             <h2>Mission Statement</h2>
             <p>{{ church.mission }}</p>
+            <img [src]="church.photos[0].src" [alt]="church.photos[0].alt" loading="lazy">
           </article>
           <article>
             <h2>Vision Statement</h2>
             <p>{{ church.vision }}</p>
+            <img [src]="church.photos[2].src" [alt]="church.photos[2].alt" loading="lazy">
           </article>
         </div>
       </div>
@@ -46,6 +48,15 @@ import { churchInfo } from '@core/church-info';
       p {
         margin: 0;
         color: var(--color-muted);
+      }
+
+      img {
+        display: block;
+        width: 100%;
+        margin-top: 1.25rem;
+        border-radius: 0.35rem;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
       }
     `
   ]

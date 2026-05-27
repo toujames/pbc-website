@@ -53,6 +53,25 @@
   </div>
 </section>
 
+<section class="photo-band" aria-labelledby="church-life-title">
+  <div class="section-inner">
+    <div class="photo-heading">
+      <div>
+        <p class="eyebrow">Church Life</p>
+        <h2 id="church-life-title">A glimpse of worship and fellowship</h2>
+      </div>
+      <a [href]="church.links.facebook" target="_blank" rel="noreferrer">See more on Facebook</a>
+    </div>
+
+    <div class="photo-grid">
+      <figure *ngFor="let photo of church.photos">
+        <img [src]="photo.src" [alt]="photo.alt" loading="lazy">
+        <figcaption>{{ photo.title }}</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
 <section class="page-section visit-band">
   <div class="section-inner visit-grid">
     <div>
