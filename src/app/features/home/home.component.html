@@ -16,8 +16,21 @@
     </p>
     <div class="hero-actions">
       <a class="button-link" routerLink="/about">Plan a Visit</a>
-      <a class="button-link secondary" routerLink="/songbook">Open Songbook</a>
       <a class="button-link secondary" [href]="church.links.giving" target="_blank" rel="noreferrer">Give Online</a>
+    </div>
+    <div class="hero-details" aria-label="Service information">
+      <div>
+        <span>Sunday Worship</span>
+        <strong>11:00 AM</strong>
+      </div>
+      <div>
+        <span>Wednesday Bible Study</span>
+        <strong>6:30 PM</strong>
+      </div>
+      <div>
+        <span>Location</span>
+        <strong>Tulsa, OK</strong>
+      </div>
     </div>
   </div>
 </section>
@@ -25,10 +38,10 @@
 <section class="page-section latest-video">
   <div class="section-inner video-grid">
     <div>
-      <p class="eyebrow">Latest Video</p>
-      <h2>Watch the latest from {{ church.shortName }}</h2>
+      <p class="eyebrow">Media</p>
+      <h2>Recent worship and teaching</h2>
       <p>
-        The homepage is set up to show the newest public upload from the PBC Tulsa YouTube channel.
+        Follow along with recent services and messages from the church YouTube channel.
       </p>
       <a class="button-link" [href]="church.links.youtube" target="_blank" rel="noreferrer">Open YouTube Channel</a>
     </div>
@@ -44,35 +57,24 @@
   </div>
 </section>
 
-<section class="page-section">
-  <div class="section-inner feature-grid">
-    <article class="content-card">
-      <h2>Sunday Worship</h2>
-      <p>Join us for Sunday Worship Service at 11:00 AM in Tulsa.</p>
-    </article>
-    <article class="content-card">
-      <h2>Church Songbook</h2>
-      <p>Search the PBC songbook by title, type, author, and lyrics from Supabase.</p>
-    </article>
-    <article class="content-card">
-      <h2>2025-2027 Leadership</h2>
-      <p>View current church staff, departments, and rotating leadership terms.</p>
-    </article>
-  </div>
-</section>
-
-<section class="page-section visit-band">
-  <div class="section-inner visit-grid">
+<section class="page-section next-steps">
+  <div class="section-inner next-steps-grid">
     <div>
-      <p class="eyebrow">Visit</p>
-      <h2>{{ church.shortName }}</h2>
+      <p class="eyebrow">Connect</p>
+      <h2>Find what you need next</h2>
       <p>{{ church.address }}</p>
     </div>
-    <div class="service-list">
-      <p *ngFor="let service of church.serviceTimes">
-        <strong>{{ service.label }}</strong>
-        <span>{{ service.time }}</span>
-      </p>
-    </div>
+    <a class="step-link" routerLink="/songbook">
+      <span>Songbook</span>
+      <strong>Search lyrics and worship songs</strong>
+    </a>
+    <a class="step-link" routerLink="/staff">
+      <span>Leadership</span>
+      <strong>Meet current staff and teams</strong>
+    </a>
+    <a class="step-link" [href]="church.links.calendar" target="_blank" rel="noreferrer">
+      <span>Calendar</span>
+      <strong>See upcoming church events</strong>
+    </a>
   </div>
 </section>
