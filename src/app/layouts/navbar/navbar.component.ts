@@ -39,7 +39,7 @@ export class NavbarComponent {
         { label: 'Mission', path: '/ministries/mission' },
         { label: 'Men', path: '/ministries/men' },
         { label: 'Women', path: '/ministries/women' },
-        { label: 'Youth', path: '/ministries/youth' },
+        { label: 'Khanglai', path: '/ministries/khanglai' },
         { label: 'Children', path: '/ministries/children' }
       ]
     },

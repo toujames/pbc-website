@@ -42,6 +42,11 @@ export const routes: Routes = [
     title: 'Ministries | PBC'
   },
   {
+    path: 'ministries/youth',
+    redirectTo: 'ministries/khanglai',
+    pathMatch: 'full'
+  },
+  {
     path: 'ministries/:slug',
     loadComponent: () => import('./features/ministries/ministries.component').then((m) => m.MinistriesComponent),
     title: 'Ministry | PBC'

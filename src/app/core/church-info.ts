@@ -47,23 +47,23 @@ export const churchInfo = {
       alt: 'Peniel Baptist Church media team'
     },
     {
-      src: 'images/church-pics/men.jpg',
+      src: 'images/church-pics/men/men.jpg',
       alt: 'Peniel Baptist Church men ministry'
     },
     {
-      src: 'images/church-pics/women.jpg',
+      src: 'images/church-pics/women/women.jpg',
       alt: 'Peniel Baptist Church women ministry'
     },
     {
-      src: 'images/church-pics/youth.jpg',
-      alt: 'Peniel Baptist Church youth ministry'
+      src: 'images/church-pics/khanglai/khanglai.jpg',
+      alt: 'Peniel Baptist Church Khanglai ministry'
     },
     {
-      src: 'images/church-pics/mission.jpg',
+      src: 'images/church-pics/mission/mission.jpg',
       alt: 'Peniel Baptist Church mission ministry'
     },
     {
-      src: 'images/church-pics/journey.jpg',
+      src: 'images/church-pics/children/journey.jpg',
       alt: 'Peniel Baptist Church children ministry'
     },
     {

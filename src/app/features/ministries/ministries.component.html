@@ -7,7 +7,18 @@
       <a class="back-link" routerLink="/ministries">Back to ministries</a>
 
       <div class="ministry-detail">
-        <img class="detail-image" [src]="ministry.image.src" [alt]="ministry.image.alt" loading="lazy">
+        <div class="detail-media">
+          <img class="detail-image" [src]="ministry.image.src" [alt]="ministry.image.alt" loading="lazy">
+
+          <div class="detail-gallery" *ngIf="ministry.gallery.length > 1">
+            <img
+              *ngFor="let image of ministry.gallery"
+              [src]="image.src"
+              [alt]="image.alt"
+              loading="lazy"
+            >
+          </div>
+        </div>
 
         <div class="detail-copy">
           <p class="lead">{{ ministry.subtitle }}</p>

@@ -7,6 +7,10 @@ export interface MinistryEntry {
     src: string;
     alt: string;
   };
+  gallery: Array<{
+    src: string;
+    alt: string;
+  }>;
   overview: string;
   bylawFocus: string[];
   emphasis: string[];
@@ -20,9 +24,15 @@ export const ministries: MinistryEntry[] = [
     summary:
       'The mission ministry helps the church focus on evangelism, outreach, and supporting the work of Christ at home and beyond.',
     image: {
-      src: 'images/church-pics/mission.jpg',
+      src: 'images/church-pics/mission/mission.jpg',
       alt: 'Church members gathered in worship and mission'
     },
+    gallery: [
+      {
+        src: 'images/church-pics/mission/mission.jpg',
+        alt: 'Mission ministry gathering'
+      }
+    ],
     overview:
       'This ministry exists to keep the church looking outward, encouraging prayer, service, giving, and participation in the Great Commission.',
     bylawFocus: [
@@ -39,9 +49,23 @@ export const ministries: MinistryEntry[] = [
     summary:
       'The men’s ministry exists to encourage men to grow in Christ, support their families, and serve the church with steady faithfulness.',
     image: {
-      src: 'images/church-pics/men.jpg',
+      src: 'images/church-pics/men/men.jpg',
       alt: 'Men gathered for a church fellowship photo'
     },
+    gallery: [
+      {
+        src: 'images/church-pics/men/men.jpg',
+        alt: 'Men ministry gathering'
+      },
+      {
+        src: 'images/church-pics/men/WhatsApp Image 2024-02-04 at 14.15.31.jpeg',
+        alt: 'Men ministry fellowship'
+      },
+      {
+        src: 'images/church-pics/men/WhatsApp Image 2024-03-17 at 20.37.43.jpeg',
+        alt: 'Men ministry gathering in worship'
+      }
+    ],
     overview:
       'This ministry helps men stay rooted in Scripture, build fellowship, and take part in the work of the church through prayer, service, and outreach.',
     bylawFocus: [
@@ -58,9 +82,19 @@ export const ministries: MinistryEntry[] = [
     summary:
       'The women’s ministry nurtures spiritual growth and helps women serve the church through compassion, hospitality, prayer, and teaching.',
     image: {
-      src: 'images/church-pics/women.jpg',
+      src: 'images/church-pics/women/women.jpg',
       alt: 'Women gathered for a church fellowship photo'
     },
+    gallery: [
+      {
+        src: 'images/church-pics/women/women.jpg',
+        alt: 'Women ministry gathering'
+      },
+      {
+        src: 'images/church-pics/women/122142703556751687.jpg',
+        alt: 'Women ministry fellowship'
+      }
+    ],
     overview:
       'This ministry is a place for women to grow together in the Word, care for one another, and support the church through meaningful service.',
     bylawFocus: [
@@ -71,21 +105,35 @@ export const ministries: MinistryEntry[] = [
     emphasis: ['Bible study and prayer', 'Care and hospitality', 'Service in the church', 'Fellowship']
   },
   {
-    slug: 'youth',
-    title: 'Youth Ministry',
+    slug: 'khanglai',
+    title: 'Khanglai Ministry',
     subtitle: 'Building young disciples for worship, service, and mission.',
     summary:
-      'The youth ministry helps young people grow in faith, develop leadership, and live out the Gospel with purpose and joy.',
+      'The Khanglai ministry helps young people grow in faith, develop leadership, and live out the Gospel with purpose and joy.',
     image: {
-      src: 'images/church-pics/youth.jpg',
-      alt: 'Youth ministry gathering at church'
+      src: 'images/church-pics/khanglai/khanglai.jpg',
+      alt: 'Khanglai ministry gathering at church'
     },
+    gallery: [
+      {
+        src: 'images/church-pics/khanglai/khanglai.jpg',
+        alt: 'Khanglai ministry gathering'
+      },
+      {
+        src: 'images/church-pics/khanglai/122138064182790487.jpg',
+        alt: 'Khanglai ministry fellowship'
+      },
+      {
+        src: 'images/church-pics/khanglai/122138065742790487.jpg',
+        alt: 'Khanglai ministry worship'
+      }
+    ],
     overview:
-      'We want our youth to know Christ deeply, stay connected to the church, and learn how to serve others with conviction and humility.',
+      'We want our Khanglai to know Christ deeply, stay connected to the church, and learn how to serve others with conviction and humility.',
     bylawFocus: [
       'Equip young people with biblical teaching and discipleship.',
       'Create fellowship that encourages accountability and healthy growth.',
-      'Prepare youth to serve in worship, outreach, and church leadership.'
+      'Prepare Khanglai to serve in worship, outreach, and church leadership.'
     ],
     emphasis: ['Discipleship', 'Fellowship and worship', 'Outreach', 'Leadership development']
   },
@@ -96,9 +144,31 @@ export const ministries: MinistryEntry[] = [
     summary:
       'The children’s ministry supports families by helping children learn Scripture, worship, and the love of Jesus in age-appropriate ways.',
     image: {
-      src: 'images/church-pics/journey.jpg',
+      src: 'images/church-pics/children/journey.jpg',
       alt: 'Children in a church ministry gathering'
     },
+    gallery: [
+      {
+        src: 'images/church-pics/children/journey.jpg',
+        alt: 'Children ministry gathering'
+      },
+      {
+        src: 'images/church-pics/children/PHOTO-2025-02-09-18-54-27.jpg',
+        alt: 'Children ministry teaching time'
+      },
+      {
+        src: 'images/church-pics/children/WhatsApp Image 2025-07-20 at 01.36.29.jpeg',
+        alt: 'Children ministry fellowship'
+      },
+      {
+        src: 'images/church-pics/children/122153676620759607.jpg',
+        alt: 'Children ministry photo'
+      },
+      {
+        src: 'images/church-pics/children/122162793866759607.jpg',
+        alt: 'Children ministry photo'
+      }
+    ],
     overview:
       'This ministry lays a foundation of faith through Bible teaching, care, and activities that help children know and follow Christ.',
     bylawFocus: [
