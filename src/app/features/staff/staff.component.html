@@ -3,8 +3,21 @@
     <p class="eyebrow">Leadership</p>
     <h1 class="section-title">Staff and church officers</h1>
     <p class="lead">Current staff and officers, with leadership term history stored in Supabase.</p>
+
+    <div class="staff-controls">
+      <label class="filter-field">
+        <span>Department</span>
+        <select [ngModel]="departmentFilter()" (ngModelChange)="updateDepartmentFilter($event)">
+          <option *ngFor="let department of departmentOptions()" [value]="department">{{ department }}</option>
+        </select>
+      </label>
+    </div>
+
     <p class="status" *ngIf="isLoading()">Loading staff...</p>
     <p class="status" *ngIf="error()">{{ error() }}</p>
+    <p class="status" *ngIf="!isLoading() && !error() && staffSections().length === 0">
+      No staff found for this department.
+    </p>
 
     <section class="department-section" *ngFor="let section of staffSections()">
       <h2>{{ section.title }}</h2>

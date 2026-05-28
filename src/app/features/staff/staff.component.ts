@@ -1,5 +1,6 @@
 import { NgFor, NgIf } from '@angular/common';
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { StaffMember } from '@models/staff-member.model';
 import { SupabaseService } from '@services/supabase.service';
@@ -7,7 +8,7 @@ import { SupabaseService } from '@services/supabase.service';
 @Component({
   selector: 'app-staff',
   standalone: true,
-  imports: [NgFor, NgIf, RouterLink],
+  imports: [FormsModule, NgFor, NgIf, RouterLink],
   templateUrl: './staff.component.html',
   styleUrl: './staff.component.scss'
 })
@@ -16,7 +17,18 @@ export class StaffComponent implements OnInit {
   protected readonly isLoading = signal(true);
   protected readonly error = signal<string | null>(null);
   protected readonly staff = signal<StaffMember[]>(this.fallbackStaff());
-  protected readonly staffSections = computed(() => this.buildStaffSections(this.staff()));
+  protected readonly departmentFilter = signal('All');
+  protected readonly departmentOptions = computed(() => [
+    'All',
+    ...Array.from(
+      new Set(
+        this.staff()
+          .flatMap((member) => member.departments ?? [])
+          .filter(Boolean)
+      )
+    ).sort((left, right) => left.localeCompare(right))
+  ]);
+  protected readonly staffSections = computed(() => this.buildStaffSections(this.staff(), this.departmentFilter()));
 
   async ngOnInit(): Promise<void> {
     try {
@@ -123,17 +135,33 @@ export class StaffComponent implements OnInit {
     return member.departments ?? [];
   }
 
-  private buildStaffSections(staff: StaffMember[]): Array<{ title: string; members: StaffMember[] }> {
+  protected updateDepartmentFilter(value: string): void {
+    this.departmentFilter.set(value);
+  }
+
+  private buildStaffSections(
+    staff: StaffMember[],
+    departmentFilter: string
+  ): Array<{ title: string; members: StaffMember[] }> {
     const grouped = new Map<string, StaffMember[]>();
+    const selectedDepartment = departmentFilter === 'All' ? null : departmentFilter;
 
     for (const member of staff) {
       const departments = member.departments ?? [];
 
       for (const department of departments) {
+        if (selectedDepartment && department !== selectedDepartment) {
+          continue;
+        }
+
         const members = grouped.get(department) ?? [];
         members.push(member);
         grouped.set(department, members);
       }
+    }
+
+    if (selectedDepartment && !grouped.has(selectedDepartment)) {
+      return [];
     }
 
     for (const members of grouped.values()) {
