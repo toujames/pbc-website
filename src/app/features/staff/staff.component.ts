@@ -16,6 +16,7 @@ export class StaffComponent implements OnInit {
   protected readonly error = signal<string | null>(null);
   protected readonly staff = signal<StaffMember[]>(this.fallbackStaff());
   protected readonly expandedBios = signal<Record<string, boolean>>({});
+  protected readonly staffSections = computed(() => this.buildStaffSections(this.staff()));
 
   async ngOnInit(): Promise<void> {
     try {
@@ -132,5 +133,36 @@ export class StaffComponent implements OnInit {
   protected phoneHref(phone: string): string {
     const digits = phone.replace(/[^+\d]/g, '');
     return `tel:${digits || phone}`;
+  }
+
+  private buildStaffSections(staff: StaffMember[]): Array<{ title: string; members: StaffMember[] }> {
+    const grouped = new Map<string, StaffMember[]>();
+
+    for (const member of staff) {
+      const department = this.normalizeDepartment(member.department);
+      const members = grouped.get(department) ?? [];
+      members.push(member);
+      grouped.set(department, members);
+    }
+
+    const executive = grouped.get('Church Executive') ?? [];
+    const otherDepartments = [...grouped.entries()]
+      .filter(([department]) => department !== 'Church Executive')
+      .sort(([left], [right]) => left.localeCompare(right))
+      .map(([title, members]) => ({ title, members }));
+
+    const sections: Array<{ title: string; members: StaffMember[] }> = [];
+
+    if (executive.length) {
+      sections.push({ title: 'Church Executive', members: executive });
+    }
+
+    sections.push(...otherDepartments);
+    return sections;
+  }
+
+  private normalizeDepartment(department?: string): string {
+    const value = department?.trim();
+    return value ? value : 'Other Ministries';
   }
 }
