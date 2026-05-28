@@ -12,8 +12,8 @@
 .photo-placeholder,
 .staff-photo {
   display: grid;
-  width: 4rem;
-  height: 4rem;
+  width: 5rem;
+  height: 5rem;
 }
 
 .photo-placeholder {
@@ -69,6 +69,23 @@ a {
   overflow-wrap: anywhere;
   color: var(--color-red-700);
   font-weight: 700;
+}
+
+.bio-toggle {
+  display: inline-flex;
+  margin-top: 0.4rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-red-700);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.bio {
+  margin-top: 0.5rem;
+  white-space: pre-line;
 }
 
 .rotation-panel {

@@ -15,6 +15,7 @@ export class StaffComponent implements OnInit {
   protected readonly isLoading = signal(true);
   protected readonly error = signal<string | null>(null);
   protected readonly staff = signal<StaffMember[]>(this.fallbackStaff());
+  protected readonly expandedBios = signal<Record<string, boolean>>({});
 
   async ngOnInit(): Promise<void> {
     try {
@@ -115,5 +116,21 @@ export class StaffComponent implements OnInit {
     }
 
     return `${member.termStartYear}-${member.termEndYear}`;
+  }
+
+  protected toggleBio(id: string): void {
+    this.expandedBios.update((current) => ({
+      ...current,
+      [id]: !current[id]
+    }));
+  }
+
+  protected isBioExpanded(id: string): boolean {
+    return Boolean(this.expandedBios()[id]);
+  }
+
+  protected phoneHref(phone: string): string {
+    const digits = phone.replace(/[^+\d]/g, '');
+    return `tel:${digits || phone}`;
   }
 }

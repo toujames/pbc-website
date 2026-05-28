@@ -156,6 +156,7 @@ export class SupabaseService {
       termStartYear: this.firstNumber(currentTerm || {}, ['term_start_year']),
       termEndYear: this.firstNumber(currentTerm || {}, ['term_end_year']),
       email: this.firstString(row, ['email']),
+      phone: this.firstString(row, ['phone']),
       photoUrl: this.firstString(row, ['photo_url']),
       bio: this.firstString(row, ['short_description', 'bio'])
     };

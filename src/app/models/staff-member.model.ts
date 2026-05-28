@@ -7,6 +7,7 @@ export interface StaffMember {
   termStartYear?: number;
   termEndYear?: number;
   email?: string;
+  phone?: string;
   photoUrl?: string;
   bio?: string;
 }
