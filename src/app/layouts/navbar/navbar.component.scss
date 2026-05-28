@@ -75,14 +75,14 @@
 
 .submenu {
   position: absolute;
-  top: calc(100% + 0.25rem);
+  top: 100%;
   left: 0;
   display: none;
   min-width: 11rem;
   margin: 0;
   border: 1px solid var(--color-border);
   border-radius: 0.4rem;
-  padding: 0.35rem;
+  padding: 0.25rem;
   background: var(--color-white);
   box-shadow: var(--shadow-soft);
   list-style: none;
@@ -107,6 +107,12 @@
 .submenu a:hover {
   border: 0;
   background: var(--color-surface);
+}
+
+.has-submenu:hover > a,
+.has-submenu:focus-within > a {
+  border-color: var(--color-red-700);
+  color: var(--color-red-700);
 }
 
 .nav-links a.active,
