@@ -1,13 +1,12 @@
 import { NgFor, NgIf } from '@angular/common';
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { StaffMember } from '@models/staff-member.model';
 import { SupabaseService } from '@services/supabase.service';
 
 @Component({
   selector: 'app-staff',
   standalone: true,
-  imports: [NgFor, NgIf, RouterLink],
+  imports: [NgFor, NgIf],
   templateUrl: './staff.component.html',
   styleUrl: './staff.component.scss'
 })
@@ -117,11 +116,6 @@ export class StaffComponent implements OnInit {
     }
 
     return `${member.termStartYear}-${member.termEndYear}`;
-  }
-
-  protected phoneHref(phone: string): string {
-    const digits = phone.replace(/[^+\d]/g, '');
-    return `tel:${digits || phone}`;
   }
 
   protected departmentLabels(member: StaffMember): string[] {

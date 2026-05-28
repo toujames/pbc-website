@@ -20,11 +20,6 @@
             <div class="departments" *ngIf="departmentLabels(member).length">
               <span class="department-chip" *ngFor="let label of departmentLabels(member)">{{ label }}</span>
             </div>
-            <p class="term">{{ termLabel(member) }}</p>
-            <p class="bylaw" *ngIf="member.bylaw">{{ member.bylaw }}</p>
-            <a *ngIf="member.email" [href]="'mailto:' + member.email">{{ member.email }}</a>
-            <a *ngIf="member.phone" [href]="phoneHref(member.phone)">{{ member.phone }}</a>
-            <a class="bio-link" *ngIf="member.bio" [routerLink]="['/about/staff', member.id]">Read bio</a>
           </div>
         </article>
       </div>

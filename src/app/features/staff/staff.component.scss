@@ -64,10 +64,6 @@ p {
   font-weight: 700;
 }
 
-.department {
-  color: var(--color-blue-900);
-}
-
 .departments {
   display: flex;
   flex-wrap: wrap;
@@ -88,35 +84,9 @@ p {
   font-weight: 700;
 }
 
-.term {
-  color: var(--color-muted);
-  font-weight: 700;
-}
-
-.bylaw {
-  color: var(--color-muted);
-  font-size: 0.9rem;
-}
-
 .status {
   color: var(--color-muted);
   font-weight: 700;
-}
-
-a {
-  overflow-wrap: anywhere;
-  color: var(--color-red-700);
-  font-weight: 700;
-}
-
-.bio-link {
-  display: inline-flex;
-  margin-top: 0.4rem;
-}
-
-.staff-card a {
-  display: block;
-  margin-top: 0.15rem;
 }
 
 .rotation-panel {
