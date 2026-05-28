@@ -37,19 +37,11 @@ export class StaffDetailComponent {
   }
 
   protected departmentLabels(member: StaffMember): string[] {
-    if (member.departments?.length) {
-      return member.departments;
-    }
-
-    return member.department ? [member.department] : [];
+    return member.departments ?? [];
   }
 
   protected termDepartmentLabels(term: StaffTerm): string[] {
-    if (term.departments?.length) {
-      return term.departments;
-    }
-
-    return term.department ? [term.department] : [];
+    return term.departments ?? [];
   }
 
   private async loadStaff(): Promise<void> {

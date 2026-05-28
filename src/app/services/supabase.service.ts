@@ -174,11 +174,7 @@ export class SupabaseService {
       name,
       role,
       department: this.firstString(currentTerm || {}, ['department']),
-      departments: this.firstStringArray(currentTerm || {}, ['departments']).length
-        ? this.firstStringArray(currentTerm || {}, ['departments'])
-        : this.firstString(currentTerm || {}, ['department'])
-          ? [this.firstString(currentTerm || {}, ['department']) as string]
-          : undefined,
+      departments: this.firstStringArray(currentTerm || {}, ['departments']),
       bylaw: this.firstString(currentTerm || {}, ['bylaw']),
       termStartYear: this.firstNumber(currentTerm || {}, ['term_start_year']),
       termEndYear: this.firstNumber(currentTerm || {}, ['term_end_year']),
@@ -192,13 +188,10 @@ export class SupabaseService {
   }
 
   private mapStaffTerm(row: StaffTermRow): StaffTerm {
-    const departments = this.firstStringArray(row, ['departments']);
-    const department = this.firstString(row, ['department']);
-
     return {
       role: this.firstString(row, ['role']) || 'Staff',
-      department,
-      departments: departments.length ? departments : department ? [department] : undefined,
+      department: this.firstString(row, ['department']),
+      departments: this.firstStringArray(row, ['departments']),
       bylaw: this.firstString(row, ['bylaw']),
       termStartYear: this.firstNumber(row, ['term_start_year']),
       termEndYear: this.firstNumber(row, ['term_end_year']),

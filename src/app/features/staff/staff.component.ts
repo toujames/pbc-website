@@ -119,21 +119,20 @@ export class StaffComponent implements OnInit {
   }
 
   protected departmentLabels(member: StaffMember): string[] {
-    if (member.departments?.length) {
-      return member.departments;
-    }
-
-    return member.department ? [member.department] : [];
+    return member.departments ?? [];
   }
 
   private buildStaffSections(staff: StaffMember[]): Array<{ title: string; members: StaffMember[] }> {
     const grouped = new Map<string, StaffMember[]>();
 
     for (const member of staff) {
-      const department = this.normalizeDepartment(member.department);
-      const members = grouped.get(department) ?? [];
-      members.push(member);
-      grouped.set(department, members);
+      const departments = member.departments ?? [];
+
+      for (const department of departments) {
+        const members = grouped.get(department) ?? [];
+        members.push(member);
+        grouped.set(department, members);
+      }
     }
 
     for (const members of grouped.values()) {
@@ -154,11 +153,6 @@ export class StaffComponent implements OnInit {
 
     sections.push(...otherDepartments);
     return sections;
-  }
-
-  private normalizeDepartment(department?: string): string {
-    const value = department?.trim();
-    return value ? value : 'Other Ministries';
   }
 
   private compareStaff(left: StaffMember, right: StaffMember): number {
