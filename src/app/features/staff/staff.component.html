@@ -19,25 +19,21 @@
       No staff found for this department.
     </p>
 
-    <p class="status" *ngIf="!showPastTerms() && currentStaff().length === 0 && !isLoading() && !error()">
-      No current staff found.
-    </p>
-
     <section class="department-section" *ngFor="let section of staffSections()">
       <h2>{{ section.title }}</h2>
       <div class="card-grid staff-grid">
-        <a class="content-card staff-card staff-card-link" *ngFor="let member of section.members" [routerLink]="['/about/staff', member.id]">
-          <img *ngIf="member.photoUrl; else initials" class="staff-photo" [src]="member.photoUrl" [alt]="member.name" loading="lazy">
+        <a class="content-card staff-card staff-card-link" *ngFor="let entry of section.entries; trackBy: trackByEntry" [routerLink]="['/about/staff', entry.member.id]">
+          <img *ngIf="entry.member.photoUrl; else initials" class="staff-photo" [src]="entry.member.photoUrl" [alt]="entry.member.name" loading="lazy">
           <ng-template #initials>
-            <div class="photo-placeholder" aria-hidden="true">{{ member.name.charAt(0) }}</div>
+            <div class="photo-placeholder" aria-hidden="true">{{ entry.member.name.charAt(0) }}</div>
           </ng-template>
           <div>
-            <h3>{{ member.name }}</h3>
-            <p class="role">{{ member.role }}</p>
-            <div class="departments" *ngIf="departmentLabels(member).length">
-              <span class="department-chip" *ngFor="let label of departmentLabels(member)">{{ label }}</span>
+            <h3>{{ entry.member.name }}</h3>
+            <p class="role">{{ entry.role }}</p>
+            <div class="departments" *ngIf="departmentLabels(entry).length">
+              <span class="department-chip" *ngFor="let label of departmentLabels(entry)">{{ label }}</span>
             </div>
-            <p class="email" *ngIf="member.email">{{ member.email }}</p>
+            <p class="email" *ngIf="entry.member.email">{{ entry.member.email }}</p>
           </div>
         </a>
       </div>

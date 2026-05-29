@@ -3,9 +3,17 @@ import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { StaffMember } from '@models/staff-member.model';
+import { StaffMember, StaffTerm } from '@models/staff-member.model';
 import { SupabaseService } from '@services/supabase.service';
 import { map } from 'rxjs';
+
+interface StaffListingEntry {
+  key: string;
+  member: StaffMember;
+  role: string;
+  departments: string[];
+  term: StaffTerm;
+}
 
 @Component({
   selector: 'app-staff',
@@ -25,26 +33,26 @@ export class StaffComponent implements OnInit {
     this.route.queryParamMap.pipe(map((params) => params.get('past') === '1')),
     { initialValue: false }
   );
-  protected readonly currentStaff = computed(() =>
-    this.staff().filter((member) => this.isCurrentMember(member))
+  protected readonly currentEntries = computed(() =>
+    this.buildEntries(this.staff(), true)
   );
-  protected readonly pastStaff = computed(() =>
-    this.staff().filter((member) => this.isPastMember(member))
+  protected readonly pastEntries = computed(() =>
+    this.buildEntries(this.staff(), false)
   );
-  protected readonly visibleStaff = computed(() =>
-    this.showPastTerms() ? this.pastStaff() : this.currentStaff()
+  protected readonly visibleEntries = computed(() =>
+    this.showPastTerms() ? this.pastEntries() : this.currentEntries()
   );
   protected readonly departmentOptions = computed(() => [
     'All',
     ...Array.from(
       new Set(
-        this.visibleStaff()
-          .flatMap((member) => this.departmentLabels(member))
+        this.visibleEntries()
+          .flatMap((entry) => this.departmentLabels(entry))
           .filter(Boolean)
       )
     ).sort((left, right) => left.localeCompare(right))
   ]);
-  protected readonly staffSections = computed(() => this.buildStaffSections(this.visibleStaff(), this.departmentFilter()));
+  protected readonly staffSections = computed(() => this.buildStaffSections(this.visibleEntries(), this.departmentFilter()));
 
   async ngOnInit(): Promise<void> {
     try {
@@ -215,44 +223,36 @@ export class StaffComponent implements OnInit {
     ];
   }
 
-  protected readonly rotatingLeaders = computed(() =>
-    this.staff().filter((member) => member.termStartYear && member.termEndYear)
-  );
-
-  protected termLabel(member: StaffMember): string {
-    if (!member.termStartYear || !member.termEndYear) {
-      return 'Ongoing';
-    }
-
-    return `${member.termStartYear}-${member.termEndYear}`;
-  }
-
-  protected departmentLabels(member: StaffMember): string[] {
-    return member.departments ?? [];
+  protected departmentLabels(entry: { departments?: string[] }): string[] {
+    return entry.departments ?? [];
   }
 
   protected updateDepartmentFilter(value: string): void {
     this.departmentFilter.set(value);
   }
 
+  protected trackByEntry(_index: number, entry: StaffListingEntry): string {
+    return entry.key;
+  }
+
   private buildStaffSections(
-    staff: StaffMember[],
+    entries: StaffListingEntry[],
     departmentFilter: string
-  ): Array<{ title: string; members: StaffMember[] }> {
-    const grouped = new Map<string, StaffMember[]>();
+  ): Array<{ title: string; entries: StaffListingEntry[] }> {
+    const grouped = new Map<string, StaffListingEntry[]>();
     const selectedDepartment = departmentFilter === 'All' ? null : departmentFilter;
 
-    for (const member of staff) {
-      const departments = member.departments ?? [];
+    for (const entry of entries) {
+      const departments = entry.departments ?? [];
 
       for (const department of departments) {
         if (selectedDepartment && department !== selectedDepartment) {
           continue;
         }
 
-        const members = grouped.get(department) ?? [];
-        members.push(member);
-        grouped.set(department, members);
+        const groupedEntries = grouped.get(department) ?? [];
+        groupedEntries.push(entry);
+        grouped.set(department, groupedEntries);
       }
     }
 
@@ -260,7 +260,7 @@ export class StaffComponent implements OnInit {
       return [
         {
           title: this.showPastTerms() ? 'Previous Staff' : 'All Staff',
-          members: [...staff].sort((left, right) => this.compareStaff(left, right))
+          entries: [...entries].sort((left, right) => this.compareEntry(left, right))
         }
       ];
     }
@@ -269,48 +269,58 @@ export class StaffComponent implements OnInit {
       return [];
     }
 
-    for (const members of grouped.values()) {
-      members.sort((left, right) => this.compareStaff(left, right));
+    for (const groupedEntries of grouped.values()) {
+      groupedEntries.sort((left, right) => this.compareEntry(left, right));
     }
 
     const executive = grouped.get('Church Executive') ?? [];
     const otherDepartments = [...grouped.entries()]
       .filter(([department]) => department !== 'Church Executive')
       .sort(([left], [right]) => left.localeCompare(right))
-      .map(([title, members]) => ({ title, members }));
+      .map(([title, entries]) => ({ title, entries }));
 
-    const sections: Array<{ title: string; members: StaffMember[] }> = [];
+    const sections: Array<{ title: string; entries: StaffListingEntry[] }> = [];
 
     if (executive.length) {
-      sections.push({ title: 'Church Executive', members: executive });
+      sections.push({ title: 'Church Executive', entries: executive });
     }
 
     sections.push(...otherDepartments);
     return sections;
   }
 
-  private compareStaff(left: StaffMember, right: StaffMember): number {
-    const leftOrder = left.order ?? Number.MAX_SAFE_INTEGER;
-    const rightOrder = right.order ?? Number.MAX_SAFE_INTEGER;
+  private compareEntry(left: StaffListingEntry, right: StaffListingEntry): number {
+    const leftOrder = left.term.order ?? Number.MAX_SAFE_INTEGER;
+    const rightOrder = right.term.order ?? Number.MAX_SAFE_INTEGER;
 
     if (leftOrder !== rightOrder) {
       return leftOrder - rightOrder;
     }
 
-    return left.name.localeCompare(right.name);
-  }
+    const roleComparison = left.role.localeCompare(right.role);
 
-  private isCurrentMember(member: StaffMember): boolean {
-    return member.terms?.some((term) => term.isCurrent) ?? false;
-  }
-
-  private isPastMember(member: StaffMember): boolean {
-    const terms = member.terms ?? [];
-
-    if (!terms.length) {
-      return false;
+    if (roleComparison !== 0) {
+      return roleComparison;
     }
 
-    return terms.some((term) => term.isCurrent === false) && !terms.some((term) => term.isCurrent);
+    return left.member.name.localeCompare(right.member.name);
+  }
+
+  private buildEntries(staff: StaffMember[], current: boolean): StaffListingEntry[] {
+    return staff.flatMap((member) => {
+      const terms = (member.terms ?? []).filter((term) => (current ? term.isCurrent === true : term.isCurrent === false));
+
+      if (!terms.length) {
+        return [];
+      }
+
+      return terms.map((term, index) => ({
+        key: `${member.id}:${current ? 'current' : 'past'}:${index}:${term.role}`,
+        member,
+        role: term.role || member.role,
+        departments: term.departments?.length ? term.departments : member.departments ?? [],
+        term
+      }));
+    });
   }
 }
