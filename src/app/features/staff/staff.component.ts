@@ -55,69 +55,149 @@ export class StaffComponent implements OnInit {
       name: 'Rev. Dr. Seikam Touthang',
       role: 'Senior Pastor & Moderator',
       department: 'Church Executive',
-      email: 'sktouthang@pbctulsa.org'
+      departments: ['Church Executive'],
+      email: 'sktouthang@pbctulsa.org',
+      terms: [
+        {
+          role: 'Senior Pastor & Moderator',
+          departments: ['Church Executive'],
+          isCurrent: true
+        }
+      ]
     },
     {
       id: 'assistant-pastor',
       name: 'Rev. Onkhomang Touthang',
       role: 'Assistant Pastor',
       department: 'Church Executive',
-      email: 'oktouthang@pbctulsa.org'
+      departments: ['Church Executive'],
+      email: 'oktouthang@pbctulsa.org',
+      terms: [
+        {
+          role: 'Assistant Pastor',
+          departments: ['Church Executive'],
+          isCurrent: true
+        }
+      ]
     },
     {
       id: 'mission-chair',
       name: 'Rev. Zamkhokhai Touthang',
       role: 'Mission Chairman',
       department: 'Church Executive',
+      departments: ['Church Executive'],
       email: 'zamkhokhaitouthang@gmail.com',
       termStartYear: 2025,
-      termEndYear: 2027
+      termEndYear: 2027,
+      terms: [
+        {
+          role: 'Mission Chairman',
+          departments: ['Church Executive'],
+          termStartYear: 2025,
+          termEndYear: 2027,
+          isCurrent: true
+        }
+      ]
     },
     {
       id: 'men-chair',
       name: 'Ngamkhothang Haokip',
       role: 'Men Chairman',
       department: 'Church Executive',
+      departments: ['Church Executive'],
       email: 'enkaytikip@gmail.com',
       termStartYear: 2025,
-      termEndYear: 2027
+      termEndYear: 2027,
+      terms: [
+        {
+          role: 'Men Chairman',
+          departments: ['Church Executive'],
+          termStartYear: 2025,
+          termEndYear: 2027,
+          isCurrent: true
+        }
+      ]
     },
     {
       id: 'women-chair',
       name: 'Lheineichong Mate Touthang',
       role: 'Women Chairperson',
       department: 'Church Executive',
+      departments: ['Church Executive'],
       termStartYear: 2025,
-      termEndYear: 2027
+      termEndYear: 2027,
+      terms: [
+        {
+          role: 'Women Chairperson',
+          departments: ['Church Executive'],
+          termStartYear: 2025,
+          termEndYear: 2027,
+          isCurrent: true
+        }
+      ]
     },
     {
       id: 'youth-chair',
       name: 'Lic. Ps. Khaiminlen Doungel',
       role: 'Youth Chairman',
       department: 'Church Executive',
+      departments: ['Church Executive'],
       termStartYear: 2025,
-      termEndYear: 2027
+      termEndYear: 2027,
+      terms: [
+        {
+          role: 'Youth Chairman',
+          departments: ['Church Executive'],
+          termStartYear: 2025,
+          termEndYear: 2027,
+          isCurrent: true
+        }
+      ]
     },
     {
       id: 'christian-education',
       name: 'Rev. Nehminthang Touthang',
       role: 'Christian Education Minister',
       department: 'Church Executive',
-      email: 'nhtouthang@pbctulsa.org'
+      departments: ['Church Executive'],
+      email: 'nhtouthang@pbctulsa.org',
+      terms: [
+        {
+          role: 'Christian Education Minister',
+          departments: ['Church Executive'],
+          isCurrent: true
+        }
+      ]
     },
     {
       id: 'finance-secretary',
       name: 'Shominlun Lhungdim',
       role: 'Finance Secretary',
       department: 'Church Executive',
-      email: 'slhungdim@pbctulsa.org'
+      departments: ['Church Executive'],
+      email: 'slhungdim@pbctulsa.org',
+      terms: [
+        {
+          role: 'Finance Secretary',
+          departments: ['Church Executive'],
+          isCurrent: true
+        }
+      ]
     },
     {
       id: 'media-director',
       name: 'James Touthang',
       role: 'Technical & Media Director',
       department: 'Individual Positions',
-      email: 'jtouthang@pbctulsa.org'
+      departments: ['Individual Positions'],
+      email: 'jtouthang@pbctulsa.org',
+      terms: [
+        {
+          role: 'Technical & Media Director',
+          departments: ['Individual Positions'],
+          isCurrent: true
+        }
+      ]
     }
     ];
   }
@@ -208,10 +288,6 @@ export class StaffComponent implements OnInit {
   }
 
   private isCurrentMember(member: StaffMember): boolean {
-    if (!member.terms?.length) {
-      return true;
-    }
-
-    return member.terms.some((term) => term.isCurrent);
+    return member.terms?.some((term) => term.isCurrent) ?? false;
   }
 }
