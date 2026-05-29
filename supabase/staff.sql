@@ -1,5 +1,7 @@
+create extension if not exists pgcrypto;
+
 create table if not exists public.staff (
-  id uuid primary key,
+  id uuid primary key default gen_random_uuid(),
   name text not null,
   email text,
   phone text,
@@ -20,7 +22,7 @@ create table if not exists public.staff (
 );
 
 create table if not exists public.staff_terms (
-  id uuid primary key,
+  id uuid primary key default gen_random_uuid(),
   staff_id uuid not null references public.staff(id) on delete cascade,
   role text not null,
   department text,
@@ -37,6 +39,12 @@ create table if not exists public.staff_terms (
 
 alter table public.staff_terms
   add column if not exists departments text[];
+
+alter table public.staff
+  alter column id set default gen_random_uuid();
+
+alter table public.staff_terms
+  alter column id set default gen_random_uuid();
 
 create index if not exists staff_is_published_sort_order_idx
   on public.staff (is_published, sort_order, name);
