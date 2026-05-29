@@ -24,6 +24,10 @@ export class StaffDetailComponent {
   }
 
   protected termLabel(term: StaffTerm): string {
+    if (term.termStartYear && !term.termEndYear) {
+      return term.isCurrent ? `${term.termStartYear}-Current` : `${term.termStartYear}-Ongoing`;
+    }
+
     if (!term.termStartYear || !term.termEndYear) {
       return term.isCurrent ? 'Current' : 'Ongoing';
     }
