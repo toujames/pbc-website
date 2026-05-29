@@ -174,11 +174,7 @@ export class SupabaseService {
       name,
       role,
       department: this.firstString(currentTerm || {}, ['department']),
-      departments: Array.from(
-        new Set(
-          terms.flatMap((term) => this.firstStringArray(term, ['departments']))
-        )
-      ),
+      departments: Array.from(new Set(this.firstStringArray(currentTerm || {}, ['departments']))),
       bylaw: this.firstString(currentTerm || {}, ['bylaw']),
       termStartYear: this.firstNumber(currentTerm || {}, ['term_start_year']),
       termEndYear: this.firstNumber(currentTerm || {}, ['term_end_year']),
