@@ -137,17 +137,20 @@ export class SongDetailComponent {
   }
 
   protected async copyLyrics(): Promise<void> {
-    const lyrics = this.song()?.lyrics;
+    const song = this.song();
+    const lyrics = song?.lyrics;
 
-    if (!lyrics) {
+    if (!song || !lyrics) {
       return;
     }
 
+    const copyText = [song.title, lyrics, 'Copied from pbctulsa.org/songbook'].join('\n\n');
+
     try {
       if (navigator.clipboard?.writeText) {
-        await navigator.clipboard.writeText(lyrics);
+        await navigator.clipboard.writeText(copyText);
       } else {
-        this.copyTextFallback(lyrics);
+        this.copyTextFallback(copyText);
       }
 
       this.copyMessage.set('Lyrics copied.');
